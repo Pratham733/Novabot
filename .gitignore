@@ -1,46 +1,90 @@
-<<<<<<< HEAD
-Global
-.DS_Store Thumbs.db
+############################
+# Root .gitignore (NovaBot)
+############################
 
-Python / Backend
-backend/env/ backend/venv/ backend/pycache/ **/pycache/ .pyc db.sqlite3 backend/server-exceptions.log server.log view-debug.log backend/.b64
-
-Node / Frontend
-node_modules/ nova_bot/node_modules/ nova_bot/dist/ nova_bot/web-build/ .expo .expo/
-
-Environment & secrets
-.env .env .env. firebase-credentials.json backend/firebase-adminsdk-.json firebase.b64
-
-IDE
-.vscode/ .idea/
-
-Logs
-.log npm-debug.log yarn-debug.log* yarn-error.log*
-=======
-# Root ignore
+# OS / Editor
 .DS_Store
 Thumbs.db
-*.log
-**/__pycache__/
-*.pyc
+.idea/
+.vscode/
+*.orig.*
+
+# Python / Backend
 backend/env/
 backend/venv/
+backend/__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pytest_cache/
+.pytest_cache/
+backend/.mypy_cache/
+.mypy_cache/
 backend/db.sqlite3
 backend/server-exceptions.log
 backend/server.log
-node_modules/
-nova_bot/node_modules/
-nova_bot/dist/
-nova_bot/web-build/
-nova_bot/.expo/
-.expo/
+backend/view-debug.log
+backend/media/
+backend/staticfiles/
+coverage/
+htmlcov/
+
+# Secrets / Env
 *.env
 .env
 .env.*
 backend/firebase-credentials.json
 backend/*firebase-adminsdk-*.json
 firebase.b64
-.vscode/
-.idea/
+
+# Node / Frontend
+node_modules/
+nova_bot/node_modules/
+.expo/
+nova_bot/.expo/
+nova_bot/dist/
+nova_bot/web-build/
+nova_bot/.next/
+nova_bot/.turbo/
 *.tsbuildinfo
->>>>>>> 609f692 (chore: initial project import)
+
+# Build / Artifacts
+dist/
+build/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Misc
+*.swp
+*.swo
+*.bak
+*.tmp
+__snapshot__/
+*.coverage
+coverage.xml
+*.lcov
+
+# Sentry / source maps (if generated locally)
+*.map
+
+# Local credentials / keys
+*.pem
+*.pfx
+*.p12
+*.key
+*.crt
+
+# Generated docs
+docs/_build/
+
+# Lock / state (optional - keep if you want reproducibility)
+# yarn.lock
+# package-lock.json
+
+# End
