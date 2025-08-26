@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.egg
+*.log
+
+# Django
+staticfiles/
+db.sqlite3
+*.sqlite3
+server-exceptions.log
+
+# Env
+.env
+.env.*
+.envrc
+firebase.b64
+
+# Firebase service account
+firebase-credentials.json
+*firebase-adminsdk-*.json
+serviceAccount*.json

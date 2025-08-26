@@ -1,0 +1,73 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Django tests
+        env:
+          DJANGO_SECRET_KEY: test-key
+          DEBUG: 'false'
+          # Provide minimal Mongo vars (test will degrade if unreachable but still 200)
+          MONGODB_USER: test
+          MONGODB_PASSWORD: test
+          MONGODB_HOST: localhost
+          MONGODB_DB_NAME: test
+        run: |
+          python manage.py collectstatic --noinput || true
+          python manage.py test --noinput
+      - name: Build Docker image
+        run: |
+          docker build -t novabot-backend:ci .
+      - name: Publish Docker image (tagged releases)
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/novabot-backend
+        run: |
+          echo "Logging into GHCR"
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
+          TAG=${GITHUB_REF##*/}
+          docker tag novabot-backend:ci $IMAGE_NAME:$TAG
+          docker push $IMAGE_NAME:$TAG
+
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: nova_bot
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: nova_bot/package.json
+      - name: Install deps
+        run: npm ci || npm install
+      - name: Type check
+        run: npx tsc --noEmit
+      - name: Lint (skip if no config)
+        run: |
+          if [ -f .eslintrc.js ] || [ -f .eslintrc.cjs ] || [ -f .eslintrc.json ]; then npx eslint . || true; fi
+      - name: Build Web bundle
+        env:
+          EXPO_PUBLIC_API_BASE: http://localhost:8000
+        run: npx expo export --platform=web --dump-sourcemap

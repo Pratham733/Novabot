@@ -1,0 +1,23 @@
+{
+    "include": [
+        "."
+    ],
+    "exclude": [
+        "**/node_modules",
+        "**/__pycache__",
+        "**/migrations",
+        "venv"
+    ],
+    "venvPath": ".",
+    "venv": "env",
+    "pythonPath": "env/Scripts/python.exe",
+    "extraPaths": [
+        ".",
+    "env/Lib/site-packages"
+    ],
+    "typeCheckingMode": "basic",
+    "useLibraryCodeForTypes": true,
+    "reportMissingImports": "warning",
+    "reportMissingTypeStubs": false,
+    "reportMissingModuleSource": false
+}

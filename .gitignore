@@ -1,0 +1,46 @@
+<<<<<<< HEAD
+Global
+.DS_Store Thumbs.db
+
+Python / Backend
+backend/env/ backend/venv/ backend/pycache/ **/pycache/ .pyc db.sqlite3 backend/server-exceptions.log server.log view-debug.log backend/.b64
+
+Node / Frontend
+node_modules/ nova_bot/node_modules/ nova_bot/dist/ nova_bot/web-build/ .expo .expo/
+
+Environment & secrets
+.env .env .env. firebase-credentials.json backend/firebase-adminsdk-.json firebase.b64
+
+IDE
+.vscode/ .idea/
+
+Logs
+.log npm-debug.log yarn-debug.log* yarn-error.log*
+=======
+# Root ignore
+.DS_Store
+Thumbs.db
+*.log
+**/__pycache__/
+*.pyc
+backend/env/
+backend/venv/
+backend/db.sqlite3
+backend/server-exceptions.log
+backend/server.log
+node_modules/
+nova_bot/node_modules/
+nova_bot/dist/
+nova_bot/web-build/
+nova_bot/.expo/
+.expo/
+*.env
+.env
+.env.*
+backend/firebase-credentials.json
+backend/*firebase-adminsdk-*.json
+firebase.b64
+.vscode/
+.idea/
+*.tsbuildinfo
+>>>>>>> 609f692 (chore: initial project import)
