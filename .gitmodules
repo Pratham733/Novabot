@@ -1,3 +1,3 @@
 [submodule "nova_bot"]
-.expopath = nova_bot
-.expourl = https://github.com/Pratham733/Novabot_Frontend.git
+	path = nova_bot
+	url = https://github.com/Pratham733/Novabot_Frontend.git
