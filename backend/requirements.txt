@@ -12,6 +12,7 @@ djangorestframework==3.15.2
 djangorestframework-simplejwt==5.3.1
 dnspython==2.7.0
 drf-spectacular==0.27.2
+dj-database-url==2.3.0
 firebase-admin==6.6.0
 google-api-core==2.25.1
 google-api-python-client==2.178.0
@@ -50,6 +51,7 @@ reportlab==4.4.3
 requests==2.32.3
 rpds-py==0.27.0
 rsa==4.9.1
+psycopg[binary]==3.2.9
 sqlparse==0.5.3
 typing_extensions==4.14.1
 tzdata==2025.2
