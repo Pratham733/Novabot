@@ -175,6 +175,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Application version (can be overridden via environment for deploy automation)
 APP_VERSION = os.getenv('APP_VERSION', '0.1.0')
 
+# If running behind a TLS terminator / reverse proxy (e.g., Caddy, nginx)
+# trust X-Forwarded-Proto so Django knows the original scheme for redirects & CSRF
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+# Ensure Django uses the original Host header provided by the proxy
+USE_X_FORWARDED_HOST = True
+
 # Production security hardening
 if not DEBUG:
     SECURE_BROWSER_XSS_FILTER = True
@@ -213,6 +219,17 @@ SPECTACULAR_SETTINGS = {
 # Firebase (optional) - token verification setup
 FIREBASE_PROJECT_ID = os.getenv('FIREBASE_PROJECT_ID', '')
 FIREBASE_CREDENTIALS_JSON = os.getenv('FIREBASE_CREDENTIALS_JSON', '')  # path to service account JSON or JSON string
+import base64
+import tempfile
+
+# Try to get base64-encoded credentials from env, else fallback to file path
+FIREBASE_CREDENTIALS_B64 = os.environ.get("FIREBASE_CREDENTIALS_B64")
+if FIREBASE_CREDENTIALS_B64:
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".json") as f:
+        f.write(base64.b64decode(FIREBASE_CREDENTIALS_B64))
+        FIREBASE_CREDENTIALS_JSON = f.name
+else:
+    FIREBASE_CREDENTIALS_JSON = os.environ.get("FIREBASE_CREDENTIALS_JSON")
 
 # If FIREBASE_PROJECT_ID is set, append FirebaseAuthentication
 if FIREBASE_PROJECT_ID:
